@@ -1,19 +1,20 @@
+# Testing a deploying on a single node
 version: "3.9"
 
 services:
   network-helper:
-    build: network-helper
+    build: network-helper/
     command: bash
   server:
     container_name: ping-pong-server
-    build: server/
-    command: python ./server.py
+    hostname: ping-pong-server
+    build: pong-server/
   client:
     # container_name: ping-pong-client
+    hostname: ping-pong-client
     deploy:
       replicas: 3
-    build: client/
-    command: python ./client.py
+    build: ping-client/
     depends_on:
       - server
   prometheus:
@@ -30,11 +31,19 @@ services:
     -  3000:3000
     volumes:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-  sqlServer:
-    container_name: sqlserver2019
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Dan123456
-    ports:
-      - 1401:1433
+  # sqlServer:
+  #   container_name: sqlserver2019
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=Dan123456
+  #   ports:
+  #     - 1401:1433
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
