@@ -8,4 +8,4 @@ COPY * /server/
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ['python' './server.py']
+ENTRYPOINT ["python3", "./server.py"]

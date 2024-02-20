@@ -9,7 +9,6 @@ def handle_client(address,conn):
             # receive data stream. it won't accept data packet greater than 1024 bytes
             data = conn.recv(1024).decode()
             if not data == 'ping':
-                NO_PINGS_REC_TOTAL.labels(address=str(address[0])).inc()
                 # if data is not received break
                 break
             print("from connected user: " + str(data), flush=True)
