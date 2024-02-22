@@ -1,4 +1,4 @@
-from prometheus_client import start_http_server, Summary, Counter
+from prometheus_client import start_http_server, Counter
 
 # Create a metric to track time spent and requests made.
 PONGS_TOTAL = Counter('pongs_total' , 'Total Pongs' , ['address'])

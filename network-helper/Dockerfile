@@ -4,7 +4,7 @@ LABEL version="1.0"
 LABEL maintaner="Daniel Molkov"
 LABEL promoted="true"
 
-RUN TOOLS="net-tools curl python3 pip" && \
+RUN TOOLS="net-tools curl python3 pip dnsutils iputils-ping" && \
     apt update && apt install $TOOLS -y
 
 RUN --mount=type=bind,source=test/requirements.txt,target=requirements.txt \
