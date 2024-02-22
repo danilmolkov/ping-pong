@@ -13,8 +13,6 @@ services:
     hostname: ping-pong-server
     build: pong-server/
   client:
-    container_name: ping-pong-client
-    hostname: ping-pong-client
     deploy:
       replicas: 3
     build: ping-client/

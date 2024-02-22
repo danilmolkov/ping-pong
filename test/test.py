@@ -4,7 +4,7 @@ import unittest
 import time
 
 def get_prometheus_metric(promQl):
-    prometheus_url = 'http://localhost:9090'
+    prometheus_url = 'http://prometheus:9090'
     query = f'{prometheus_url}/api/v1/query?query={promQl}'
 
     try:
@@ -35,8 +35,8 @@ class PingPongTesting(unittest.TestCase):
         self.assertEqual(int(get_prometheus_metric('count(pings_total)')), int(get_prometheus_metric('count(pongs_total)')))
 
 if __name__ == '__main__':
-    sleepTime = 300
+    sleepTime = 50
     print(f'Sleep {sleepTime} seconds..')
-    time.sleep(300)
+    time.sleep(sleepTime)
     print(f'Start testing..')
     unittest.main()
