@@ -1,6 +1,8 @@
 # Testing a deploying on a single node with metrics
 version: "3.9"
 
+name: ping-pong
+
 services:
   network-helper:
     container_name: network-helper
