@@ -33,9 +33,12 @@ class PingPongTesting(unittest.TestCase):
         self.assertAlmostEqual(int(get_prometheus_metric('sum(pings_total)')),int(get_prometheus_metric('sum(pongs_total)')), delta=10)
     def test_pings_and_pongs_count_equals_replicas(self):
         self.assertEqual(int(get_prometheus_metric('count(pings_total)')), int(get_prometheus_metric('count(pongs_total)')))
+    def test_not_pings_received(self):
+        self.assertTrue(int(get_prometheus_metric('sum(not_pings_received_total)')) != 0)
+
 
 if __name__ == '__main__':
-    sleepTime = 50
+    sleepTime = 100
     print(f'Sleep {sleepTime} seconds..')
     time.sleep(sleepTime)
     print(f'Start testing..')

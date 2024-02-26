@@ -1,5 +1,8 @@
 # Setup ci-cd environment on your host
 version: '3.8'
+
+name: ci-cd
+
 services:
   jenkins:
     image: jenkins/jenkins:lts

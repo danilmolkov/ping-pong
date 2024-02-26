@@ -27,7 +27,7 @@ func main() {
 	metricsPort := "8000"
 	intervalMin := 5  // Minimum interval in seconds
 	intervalMax := 15 // Maximum interval in seconds
-	log.SetLevel(log.DebugLevel)
+	log.SetLevel(log.InfoLevel)
 
 	http.Handle("/metrics", promhttp.Handler())
 	prometheus.MustRegister(pingCounter)
@@ -44,15 +44,16 @@ func main() {
 	}()
 
 	log.Println("Start sending Pings")
+	message := "not-a-ping"
 	for {
-		sendMessage(host, port)
+		sendMessage(host, port, message)
+		message = "ping"
 		sleepTime := rand.Intn(intervalMax-intervalMin) + intervalMin
 		time.Sleep(time.Duration(sleepTime) * time.Second)
 	}
 }
 
-func sendMessage(host, port string) {
-	message := "ping"
+func sendMessage(host, port string, message string) {
 	addr := fmt.Sprintf("%s:%s", host, port)
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
@@ -66,7 +67,9 @@ func sendMessage(host, port string) {
 		log.Errorf("Failed to send message to %s: %v\n", addr, err)
 		return
 	}
-	pingCounter.Inc()
+	if message == "ping" {
+		pingCounter.Inc()
+	}
 	log.Debugf("Sent '%s' to %s\n", message, addr)
 
 }

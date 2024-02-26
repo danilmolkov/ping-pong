@@ -10,6 +10,7 @@ def handle_client(address,conn):
             data = conn.recv(1024).decode()
             if not data == 'ping':
                 # if data is not received break
+                NOT_PINGS_TOTAL.labels(address=str(address[0])).inc()
                 break
             print("from connected user: " + str(data), flush=True)
             data = "pong"
